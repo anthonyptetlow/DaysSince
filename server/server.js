@@ -16,7 +16,7 @@ app.set('port', 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Update this to reflect static files get angular app
-app.use(express.static('./app'));
+app.use(express.static(__dirname + '/../client/build/'));
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
