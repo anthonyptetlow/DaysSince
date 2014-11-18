@@ -4,6 +4,7 @@ var debug = require('debug');
 
 var app = express();
 var indexRoutes = require('./routes/index');
+var entryRoutes = require('./routes/entry');
 var usersRoutes = require('./routes/users');
 
 // New Code
@@ -25,6 +26,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/api', indexRoutes);
+app.use('/api/entry', entryRoutes);
 app.use('/api/user', usersRoutes);
 
 

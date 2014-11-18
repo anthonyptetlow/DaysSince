@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var collectionNames = require('../conf/config').collectionNames;
 
 router.get('/all', function (req, res) {
 	var db = req.db;
-	var collection = db.get('usercollection');
+	var collection = db.get(collectionNames.userList);
 	collection.find({},{}, function (error, docs) {
 		console.log(docs);
 		res.json(docs);	
@@ -12,7 +13,7 @@ router.get('/all', function (req, res) {
 
 router.get('/:id', function (req, res) {
 	var db = req.db;
-	var collection = db.get('usercollection');
+	var collection = db.get(collectionNames.userList);
 	var userToGet = req.params.id;
 	collection.findById(userToGet, function (error, docs) {
 		console.log(docs);
@@ -22,13 +23,13 @@ router.get('/:id', function (req, res) {
 
 router.post('/', function (req, res) {
 	var db = req.db;
-	var collection = db.get('usercollection');
+	var collection = db.get(collectionNames.userList);
 	
 	console.log(req.body);
 	var userName = req.body.userName;
 	var userEmail = req.body.userEmail;
 
-	collection.insert({
+	collection.insert({  
 		'userName': userName,
 		'userEmail': userEmail
 	}, function (err, doc) {
@@ -42,7 +43,7 @@ router.post('/', function (req, res) {
 
 router.put('/:id', function (req, res) {
 	var db = req.db;
-	var collection = db.get('usercollection');
+	var collection = db.get(collectionNames.userList);
 	var userToGet = req.params.id;
 	
 	console.log(req.body);
@@ -63,7 +64,7 @@ router.put('/:id', function (req, res) {
 
 router.delete('/:id', function (req, res) {
 	var db = req.db;
-	var collection = db.get('usercollection');
+	var collection = db.get(collectionNames.userList);
 	var userToDelete = req.params.id;
 	collection.remove({_id: userToDelete}, function(err, result) {
 		if (result === 1) {
