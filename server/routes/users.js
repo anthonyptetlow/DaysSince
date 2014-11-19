@@ -16,7 +16,6 @@ router.get('/:id', function (req, res) {
 	var collection = db.get(collectionNames.userList);
 	var userToGet = req.params.id;
 	collection.findById(userToGet, function (error, docs) {
-		console.log(docs);
 		res.json(docs);	
 	});
 });

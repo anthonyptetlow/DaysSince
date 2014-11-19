@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var debug = require('debug');
+var expressValidator = require('express-validator'),
 
 var app = express();
 var indexRoutes = require('./routes/index');
@@ -11,6 +12,10 @@ var usersRoutes = require('./routes/users');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/test');
+
+
+app.use(express.bodyParser());
+app.use(expressValidator());
 
 app.set('port', 3000);
 
