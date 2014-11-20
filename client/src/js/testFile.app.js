@@ -2,9 +2,23 @@ angular.module('app',['ui.router']).config(function($stateProvider, $urlRouterPr
 	$urlRouterProvider.otherwise("/");
 
 	$stateProvider
-		.state('profile', {
+		.state('home', {
 			url:'/',
+			templateUrl: './js/module/partials/home.html'
+		})
+		.state('signUp', {
+			url:'/signUp',
+			controller: 'SignUpController',
+			templateUrl: './js/module/partials/signUp.html'
+		})
+		.state('signIn', {
+			url:'/signIn',
+			controller: 'SignInController',
+			templateUrl: './js/module/partials/signIn.html'
+		})
+		.state('app', {
+			url:'/app',
 			controller: 'MainCtrl',
-			templateUrl: './js/module/partials/content.html'
+			templateUrl: './js/module/partials/app.html'
 		});
 });
