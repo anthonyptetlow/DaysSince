@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var debug = require('debug');
-
+var morgan =  require('morgan');
 var app = express();
 var indexRoutes = require('./routes/index');
 var usersRoutes = require('./routes/users');
@@ -13,6 +13,7 @@ var db = monk('localhost:27017/test');
 
 app.set('port', 3000);
 
+app.use(morgan('dev'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Update this to reflect static files get angular app
