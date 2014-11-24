@@ -6,10 +6,8 @@ var app = express();
 var indexRoutes = require('./routes/index');
 var usersRoutes = require('./routes/users');
 
-// New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/test');
+var mongoose   = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/test'); // connect to our database
 
 app.set('port', 3000);
 
@@ -19,11 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Update this to reflect static files get angular app
 app.use(express.static(__dirname + '/../client/build/'));
 
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
 
 app.use('/api', indexRoutes);
 app.use('/api/user', usersRoutes);
