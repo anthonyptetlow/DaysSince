@@ -2,15 +2,11 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 
-
 router.get('/all', function (req, res) {
-
 	User.find(function (error, users) {
-		console.log(users);
 		if (error) res.status(500).send(error);
 		res.json(users);	
 	});
-
 });
 
 router.get('/:id', function (req, res) {
@@ -22,7 +18,6 @@ router.get('/:id', function (req, res) {
 
 router.post('/', function (req, res) {
 	var newUser = new User();
-	console.log(req.body.username);
 	newUser.username  = req.body.username;
 	newUser.email = req.body.email;
 	newUser.passwordHash = 'newHash';
@@ -36,7 +31,6 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:id', function (req, res) {
-
 	User.findById(req.params.id, function (error, user) {
 	  	if (error) res.status(500).send(error)
 	  	user.username = req.body.username;
@@ -46,8 +40,6 @@ router.put('/:id', function (req, res) {
 			res.status(200).end();
 	  	});
 	})	
-
-
 });
 
 router.delete('/:id', function (req, res) {
