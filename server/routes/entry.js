@@ -1,95 +1,68 @@
 var express = require('express');
 var router = express.Router();
-var collectionNames = require('../conf/config').collectionNames;
 
+var Entry = require('../models/Entry');
 
-function safeCreateEntry(req) {
-	// Insert checking on userId
-	var userCollection = req.db.get(collectionNames.userList);
-	collection.find()
-
-	if (req.body.title && req.body.userId) {
-		var entry = {};
-		entry.title = req.body.title;
-		entry.userId = req.body.userId;
-		entry.dates = [new Date()];
-		return entry;
-	}
-	return null;
-}
-
-// router.get('/all', function (req, res) {
-// 	var db = req.db;
-// 	var collection = db.get(collectionNames.entryList);
-// 	collection.find({},{}, function (error, docs) {
-// 		res.json(docs);	
-// 	});
-// });
-
-// router.get('/:id', function (req, res) {
-// 	var db = req.db;
-// 	var collection = db.get(collectionNames.entryList);
-// 	var userToGet = req.params.id;
-// 	collection.findById(userToGet, function (error, docs) {
-// 		console.log(docs);
-// 		res.json(docs);	
-// 	});
-// });
-
-router.post('/', function (req, res) {
-	var db = req.db;
-	var collection = db.get(collectionNames.entryList);
-
-	var entry = safeCreateEntry(req);
-
-	if (!entry) {
-		res.status(500).send("Invalid Body Data");	
-	} else {
-		collection.insert(
-			entry,
-			function (err, doc) {
-				if (err) {
-		            res.status(500).send("There was a problem adding the information to the database.");
-				} else {
-					res.status(200).end();
-				}
-			}
-		);
-	}
+router.get('/all/', function (req, res) {
+	Entry.find(function (error, entries) {
+		if (error) res.status(500).send(error);
+		res.json(entries);
+	});
 });
 
-// router.put('/:id', function (req, res) {
-// 	var db = req.db;
-// 	var collection = db.get(collectionNames.entryList);
-// 	var userToGet = req.params.id;
-	
-// 	console.log(req.body);
-// 	var userName = req.body.userName;
-// 	var userEmail = req.body.userEmail;
+router.get('/all/:userId', function (req, res) {
+	Entry.find({userId : req.params.userId} ,function (error, entries) {
+		if (error) res.status(500).send(error);
+		res.json(entries);
+	});
+});
 
-// 	collection.findAndModify({_id: userToGet}, {
-// 		'userName': userName,
-// 		'userEmail': userEmail
-// 	}, function (err, doc) {
-// 		if (err) {
-//             res.send(500, "There was a problem adding the information to the database.");
-// 		} else {
-// 			res.status(200).end();
-// 		}
-// 	});
-// });
+router.get('/:id', function (req, res) {
+	Entry.findById(req.params.id, function (error, entry) {
+		if (error) res.status(500).send(error);
+		res.json(entry);
+	});
+});
 
-// router.delete('/:id', function (req, res) {
-// 	var db = req.db;
-// 	var collection = db.get(collectionNames.entryList);
-// 	var userToDelete = req.params.id;
-// 	collection.remove({_id: userToDelete}, function(err, result) {
-// 		if (result === 1) {
-// 			res.status(200).end();
-// 		} else {
-// 			res.status(500).send({ msg:'error: ' + err });
-// 		}
-//     });
-// });
+router.post('/', function (req, res) {
+	var newEntry = new Entry();
+	newEntry.title  = req.body.title;
+	newEntry.userId = req.body.userId;
+	newEntry.dates = [new Date()];
+	newEntry.save(function (error) {
+		if (error) res.status(500).send(error);
+		res.status(200).end();
+	});
+});
+
+router.put('/:id', function (req, res) {
+	Entry.findById(req.params.id, function (error, entry) {
+	  	if (error) res.status(500).send(error)
+	  	entry.title = req.body.title;
+		entry.save(function (error) {
+		  	if (error) res.status(500).send(error)
+			res.status(200).end();
+	  	});
+	})	
+});
+
+router.put('/:id/addEvent', function (req, res) {
+	Entry.findById(req.params.id, function (error, entry) {
+	  	if (error) res.status(500).send(error)
+	  	entry.dates.push(new Date());
+		entry.save(function (error) {
+		  	if (error) res.status(500).send(error)
+			res.status(200).end();
+	  	});
+	})	
+});
+
+
+router.delete('/:id', function (req, res) {
+	Entry.findByIdAndRemove(req.params.id, function (error) {
+		if (error) res.status(500).send(error);
+		res.status(200).end();
+	})
+});
 
 module.exports = router;
