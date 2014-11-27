@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 
-router.get('/all', function (req, res) {
+router.get('/', function (req, res) {
 	User.find(function (error, users) {
 		if (error) res.status(500).send(error);
 		res.json(users);	
