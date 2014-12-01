@@ -5,7 +5,7 @@ var UserSchema = new Schema({
 	username: String,
 	email: String,
 	passwordHash: String,
-	// salt: String,
+	salt: String,
 	isActivated: Boolean
 });
 

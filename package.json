@@ -1,6 +1,6 @@
 {
 	"scripts": {
-	    "start": "gulp start"
+	    "start": "gulp clean; gulp start"
 	},
   "dependencies": {
     "gulp": "~3.8.10",

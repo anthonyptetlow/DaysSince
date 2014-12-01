@@ -16,19 +16,6 @@ router.get('/:id', function (req, res) {
 	});
 });
 
-router.post('/', function (req, res) {
-	var newUser = new User();
-	newUser.username  = req.body.username;
-	newUser.email = req.body.email;
-	newUser.passwordHash = 'newHash';
-	// newUser.salt
-	newUser.isActivated = false;
-
-	newUser.save(function (error) {
-		if (error) res.status(500).send(error);
-		res.status(200).end();
-	});
-});
 
 router.put('/:id', function (req, res) {
 	User.findById(req.params.id, function (error, user) {
@@ -48,5 +35,41 @@ router.delete('/:id', function (req, res) {
 		res.status(200).end();
 	})
 });
+
+
+router.get('/:user/salt', function (req, res) {
+	User.find({ username: req.params.user }, function (error, user) {
+		if (error) res.status(500).send(error);
+		if (user.length === 1) {
+			res.json({salt: user.salt});
+		} else {
+			User.find({ email: req.params.user }, function (error, user) {
+				if(error) res.status(500).send(error);
+				if(user.length === 0) {
+					res.status(404).send({error: {message: 'User not found', code: 'NO_USER'}});
+				} else {
+					res.json({salt: user.salt});
+				}
+			});
+		}
+	});
+});
+
+router.post('/register', function (req, res) {
+	var newUser = new User();
+	newUser.username = req.body.username;
+	newUser.email = req.body.email;
+	newUser.salt = req.body.salt;
+	newUser.passwordHash = req.body.passwordHash;
+	newUser.isActivated = false;
+	newUser.save(function (error) {
+		if (error) res.status(500).send(error);
+		res.status(200).end();
+	});
+});
+
+
+
+
 
 module.exports = router;

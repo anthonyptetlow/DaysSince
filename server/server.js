@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost:27017/test'); // connect to our database
 
 app.set('port', 3000);
 
-app.use(morgan('dev'))
+app.use('/api', morgan('dev'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Update this to reflect static files get angular app
