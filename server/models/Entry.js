@@ -1,9 +1,8 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
-var ObjectId     = mongoose.Schema.Types.ObjectId;
 
 var EntrySchema = new Schema({
-	userId: ObjectId,
+	userId: String,
 	title: String,
 	dates: [Date]
 });
