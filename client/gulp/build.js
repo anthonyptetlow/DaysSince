@@ -62,7 +62,7 @@ module.exports = function (gulp) {
 		gulp.watch(__dirname + '/../src/assets/*', ['assets']);
 	});
 
-	gulp.task('clean', function (cb) {
+	gulp.task('clean', function () {
 		return del.sync([
 			__dirname + '/../build/*'
 			]);		
