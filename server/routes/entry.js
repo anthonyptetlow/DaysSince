@@ -44,48 +44,62 @@ router.post('/', function (req, res) {
 	});
 });
 
-router.put('/:id', function (req, res) {
-	Entry.findById(req.params.id, function (error, entry) {
-	  	if (error) res.status(500).send(error);
-		
-		if (entry.userId !== getUserId(req.session)) {
-			res.status(500).send("Unable to update entry");
-		}
-
-	  	entry.title = req.body.title;
-		entry.save(function (error) {
-		  	if (error) res.status(500).send(error);
-			res.status(200).end();
-	  	});
-	})	
-});
 
 router.put('/:id/addEvent', function (req, res) {
+	console.log(req.params.id);
 	Entry.findById(req.params.id, function (error, entry) {
-	  	if (error) res.status(500).send(error);
-
-		if (entry.userId !== getUserId(req.session)) {
+	  	if (error) {
+	  		console.log('error1');
+	  		res.status(500).send(error);
+	  	} else if (entry.userId !== getUserId(req.session)) {
+	  		console.log('error2');
 			res.status(500).send("Unable to update entry");
+		} else {
+		  	entry.dates.push(new Date());
+			entry.save(function (error) {
+			  	if (error) {
+			  		console.log('error2');
+			  		res.status(500).send(error)
+				} else {
+			  		console.log('Success');
+					res.status(200).end();
+		  		}
+		  	});
 		}
-	  	entry.dates.push(new Date());
-		entry.save(function (error) {
-		  	if (error) res.status(500).send(error)
-			res.status(200).end();
-	  	});
-	})	
+	});	
 });
+
+
+router.put('/:id', function (req, res) {
+	Entry.findById(req.params.id, function (error, entry) {
+	  	if (error) {
+	  		res.status(500).send(error);
+		} else if (entry.userId !== getUserId(req.session)) {
+			res.status(500).send("Unable to update entry");
+		} else {
+		  	entry.title = req.body.title;
+			entry.save(function (error) {
+			  	if (error) res.status(500).send(error);
+				res.status(200).end();
+		  	});
+	  	}
+	});	
+});
+
 
 
 router.delete('/:id', function (req, res) {
 	Entry.findById(req.params.id, function (error, entry) {
-		if (error) res.status(500).send(error);
-
-		if (entry.userId !== getUserId(req.session)) {
+		if (error) {
+			res.status(500).send(error);
+		} else if (entry.userId !== getUserId(req.session)) {
 			res.status(500).send("Unable to update entry");
-		}
+		} else {
 		entry.remove();
 		res.status(200).end();
-	})
+	
+		}
+	});
 });
 
 module.exports = router;

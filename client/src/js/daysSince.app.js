@@ -6,16 +6,6 @@ angular.module('app',['ngResource', 'ui.router']).config(function($stateProvider
 			url:'/',
 			templateUrl: './js/module/partials/home.html'
 		})
-		.state('signUp', {
-			url:'/signUp',
-			controller: 'SignUpController',
-			templateUrl: './js/module/partials/signUp.html'
-		})
-		.state('signIn', {
-			url:'/signIn',
-			controller: 'SignInController',
-			templateUrl: './js/module/partials/signIn.html'
-		})
 		.state('app', {
 			url:'/app',
 			controller: 'MainCtrl',
