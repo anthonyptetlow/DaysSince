@@ -1,5 +1,2 @@
-<div class="signPanel col-sm-offset-2 col-sm-8">
-	<div class="box text-center">
-		<h1><a href="/api/auth/twitter">Sign In</a></h1>
-	</div>
-</div>
+<div class="entryPanel" data-ng-repeat="entry in entryList" ng-bind="entry.title"></div>
+<div class="entryPanel addEntry text-center" data-ng-click="addEntry()">Add Entry</div>

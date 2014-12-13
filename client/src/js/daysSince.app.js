@@ -4,11 +4,16 @@ angular.module('app',['ngResource', 'ui.router']).config(function($stateProvider
 	$stateProvider
 		.state('home', {
 			url:'/',
-			templateUrl: './js/module/partials/home.html'
+			templateUrl: './js/module/partials/signIn.html'
 		})
 		.state('app', {
 			url:'/app',
 			controller: 'MainCtrl',
-			templateUrl: './js/module/partials/app.html'
+			templateUrl: './js/module/partials/home.html',
+			resolve : {
+				entryList: function (EntryService) {
+					return EntryService.getEntries();
+				}
+			}
 		});
 });

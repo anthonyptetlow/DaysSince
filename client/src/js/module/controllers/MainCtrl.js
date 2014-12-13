@@ -1,8 +1,15 @@
-angular.module('app').controller('MainCtrl', ['$scope', function ($scope) {
-	$scope.entryList = [];
+angular.module('app').controller('MainCtrl', ['$scope', 'EntryService', 'entryList', function ($scope, EntryService, entryList) {
+
+	$scope.entryList = entryList;	
 
 	$scope.addEntry = function () {
-		$scope.entryList.push({title:'test title ' + $scope.entryList.length});
+		EntryService.createEntry({title:'test title ' + $scope.entryList.length})
+			.then(function (){
+				return EntryService.getEntries();
+			})
+			.then(function (newEntryList) {
+				$scope.entryList = newEntryList;
+			});
 	};
 
 }]);
