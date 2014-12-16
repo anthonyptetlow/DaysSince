@@ -33,7 +33,6 @@ angular.module('app').service('EntryService', [
 		
 		function deleteEntry(id) {
 			return getEntry(id).then(function (entry) {
-				console.log(entry);
 				return entry.$remove({id: id});
 			});
 		}

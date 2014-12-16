@@ -1,2 +1,9 @@
-<div class="entryPanel" data-ng-repeat="entry in entryList" ng-bind="entry.title"></div>
-<div class="entryPanel addEntry text-center" data-ng-click="addEntry()">Add Entry</div>
+<div class="entryPanel" data-ng-repeat="entry in entryList">
+	<span ng-bind="entry.title"></span>
+	<span ng-bind="getDaysSince(entry)"></span>
+	<span class="glyphicon glyphicon-remove delete" data-ng-click="deleteEntry(entry._id)"></span>
+</div>
+
+<form data-ng-submit="addEntry()">
+	<input class="entryPanel addEntry text-center" type="text" data-ng-model="entry.title" placeholder="Add Entry"></input>
+</form>
