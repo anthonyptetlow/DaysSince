@@ -1,6 +1,7 @@
 <div class="entryPanel" data-ng-repeat="entry in entryList">
-	<span ng-bind="entry.title"></span>
 	<span ng-bind="getDaysSince(entry)"></span>
+	<span>days since<span>
+	<span ng-bind="entry.title"></span>
 	<span class="glyphicon glyphicon-remove delete" data-ng-click="deleteEntry(entry._id)"></span>
 </div>
 
