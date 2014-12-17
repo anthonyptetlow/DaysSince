@@ -3,6 +3,7 @@ angular.module('app').controller('MainCtrl', ['$scope', 'EntryService', 'entryLi
 	$scope.entryList = entryList;	
 
 	$scope.entry = {}; 
+	
 	$scope.addEntry = function () {
 		if (angular.isDefined($scope.entry.title)) {
 			EntryService.createEntry($scope.entry)
@@ -28,7 +29,6 @@ angular.module('app').controller('MainCtrl', ['$scope', 'EntryService', 'entryLi
 	$scope.getDaysSince = function (entry){
 		var lastDate = entry.dates[entry.dates.length - 1],
 			noMillisSince = new Date() - new Date(lastDate);
-		console.log(noMillisSince);
 		return Math.floor(noMillisSince / (1000*60*60*24));
 	};
 }]);
