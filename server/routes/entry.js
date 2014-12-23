@@ -46,7 +46,6 @@ router.post('/', function (req, res) {
 
 
 router.put('/:id/addEvent', function (req, res) {
-	console.log(req.params.id);
 	Entry.findById(req.params.id, function (error, entry) {
 	  	if (error) {
 	  		console.log('error1');
