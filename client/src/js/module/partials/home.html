@@ -1,8 +1,9 @@
-<div class="entryPanel" data-ng-repeat="entry in entryList">
+<div class="entryPanel clearfix" data-ng-repeat="entry in entryList">
 	<span ng-bind="getDaysSince(entry)"></span>
-	<span>days since<span>
+	<span>days since</span>
 	<span ng-bind="entry.title"></span>
 	<span class="glyphicon glyphicon-remove delete" data-ng-click="deleteEntry(entry._id)"></span>
+	<button class="btn" data-ng-click="resetEntry(entry._id)">Reset Count</button>
 </div>
 
 <form data-ng-submit="addEntry()">

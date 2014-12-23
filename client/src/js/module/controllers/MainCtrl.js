@@ -18,10 +18,22 @@ angular.module('app').controller('MainCtrl', ['$scope', 'EntryService', 'entryLi
 	};
 
 	$scope.deleteEntry = function (id) {
-		EntryService.deleteEntry(id).then(function getEntries() {
+		EntryService.deleteEntry(id)
+		.then(function getEntries() {
 			return EntryService.getEntries();
 		})
 		.then(function updateEntries (entries) {
+			$scope.entryList = entries;
+		});
+	};
+
+	$scope.resetEntry = function (id) {
+		console.log("Reset Entry");
+		EntryService.addEvent(id)
+		.then(function () {
+			return EntryService.getEntries();
+		})
+		.then(function (entries) {
 			$scope.entryList = entries;
 		});
 	};
