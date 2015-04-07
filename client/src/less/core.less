@@ -4,10 +4,11 @@ html, .container {
 
 .signPanel {
 	top: 50px;
+	padding: 40px;
 	background-color: grey;
 	border-radius: 1px;
-	padding: 40px;
-	a, a:hover{
+
+	a, a:hover {
 		color: rgb(51, 51, 51);
 		text-decoration: none;
 	}
@@ -20,12 +21,12 @@ html, .container {
 }
 
 .entryPanel {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	font-size: 24px;
 	background-color: grey;
 	border-radius: 1px;
-	margin-bottom: 10px;
-	padding: 10px;
-	width: 100%;
-	font-size: 24px;
 
 	&.addEntry {
 		background-color: transparent;
@@ -33,12 +34,13 @@ html, .container {
 	}
 
 	.delete {
-		float: right;
-		font-size: 24px;
-		margin-left: 10px;
 		top: 6px;
+		float: right;
+		margin-left: 10px;
+		font-size: 24px;
+
 		&:hover {
-			cursor: pointer;		
+			cursor: pointer;
 		}
 	}
 
@@ -51,15 +53,15 @@ html, .container {
 
 }
 
-input.entryPanel {
+input {
 	outline: none;
 }
 
-.clearfix:after { 
-   content: " ";
-   display: block; 
-   height: 0; 
+.clearfix:after {
+   display: block;
+   height: 0;
    clear: both;
+   content: " ";
 }
 
 

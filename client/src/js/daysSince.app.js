@@ -1,16 +1,16 @@
-angular.module('app',['ngResource', 'ui.router']).config(function($stateProvider, $urlRouterProvider){
-	$urlRouterProvider.otherwise("/");
+angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvider, $urlRouterProvider){
+	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
 		.state('home', {
-			url:'/',
+			url: ' /',
 			templateUrl: './js/module/partials/signIn.html'
 		})
 		.state('app', {
-			url:'/app',
+			url: '/app',
 			controller: 'MainCtrl',
 			templateUrl: './js/module/partials/home.html',
-			resolve : {
+			resolve: {
 				entryList: function (EntryService) {
 					return EntryService.getEntries();
 				}

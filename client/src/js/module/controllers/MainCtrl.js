@@ -1,46 +1,50 @@
-angular.module('app').controller('MainCtrl', ['$scope', 'EntryService', 'entryList', function ($scope, EntryService, entryList) {
+angular.module('app').controller('MainCtrl', [
+	'$scope',
+	'EntryService',
+	'entryList',
+	function ($scope, EntryService, entryList) {
 
-	$scope.entryList = entryList;	
+		$scope.entryList = entryList;
 
-	$scope.entry = {}; 
-	
-	$scope.addEntry = function () {
-		if (angular.isDefined($scope.entry.title)) {
-			EntryService.createEntry($scope.entry)
-				.then(function (){
-					return EntryService.getEntries();
-				})
-				.then(function (entries) {
-					$scope.entryList = entries;
-					$scope.entry = {};
-				});
-		}
-	};
+		$scope.entry = {};
 
-	$scope.deleteEntry = function (id) {
-		EntryService.deleteEntry(id)
-		.then(function getEntries() {
-			return EntryService.getEntries();
-		})
-		.then(function updateEntries (entries) {
-			$scope.entryList = entries;
-		});
-	};
+		$scope.addEntry = function () {
+			if (angular.isDefined($scope.entry.title)) {
+				EntryService.createEntry($scope.entry)
+					.then(function (){
+						return EntryService.getEntries();
+					})
+					.then(function (entries) {
+						$scope.entryList = entries;
+						$scope.entry = {};
+					});
+			}
+		};
 
-	$scope.resetEntry = function (id) {
-		console.log("Reset Entry");
-		EntryService.addEvent(id)
-		.then(function () {
-			return EntryService.getEntries();
-		})
-		.then(function (entries) {
-			$scope.entryList = entries;
-		});
-	};
+		$scope.deleteEntry = function (id) {
+			EntryService.deleteEntry(id)
+			.then(function getEntries() {
+				return EntryService.getEntries();
+			})
+			.then(function updateEntries (entries) {
+				$scope.entryList = entries;
+			});
+		};
 
-	$scope.getDaysSince = function (entry){
-		var lastDate = entry.dates[entry.dates.length - 1],
-			noMillisSince = new Date() - new Date(lastDate);
-		return Math.floor(noMillisSince / (1000*60*60*24));
-	};
-}]);
+		$scope.resetEntry = function (id) {
+			EntryService.addEvent(id)
+			.then(function () {
+				return EntryService.getEntries();
+			})
+			.then(function (entries) {
+				$scope.entryList = entries;
+			});
+		};
+
+		$scope.getDaysSince = function (entry){
+			var lastDate = entry.dates[entry.dates.length - 1],
+				noMillisSince = new Date() - new Date(lastDate);
+			return Math.floor(noMillisSince / (1000 * 60 * 60 * 24));
+		};
+	}
+]);

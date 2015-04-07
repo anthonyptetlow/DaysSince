@@ -17,12 +17,12 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: TWITTER_CONSUMER_KEY,
     consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://127.0.0.1:3000/api/auth/twitter/callback"
+    callbackURL: "http://localhost:3000/api/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
-    // console.log(token);
-    // console.log(tokenSecret);
+    console.log(token);
+    console.log(tokenSecret);
     // console.log(profile);
     process.nextTick(function () {
       

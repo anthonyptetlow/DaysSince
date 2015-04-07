@@ -3,7 +3,7 @@ angular.module('app').service('EntryService', [
 	'$q',
 	function ($resource, $q) {
 		var EntryResource = $resource('/api/entries/:id', {}, {
-	        'addEvent': { method:'PUT', url:'/api/entries/:id/addEvent' }
+			'addEvent': { method: 'PUT', url: '/api/entries/:id/addEvent' }
 		});
 
 		function getEntries() {
@@ -15,7 +15,7 @@ angular.module('app').service('EntryService', [
 			});
 			return defered.promise;
 		}
-		
+
 		function getEntry(id) {
 			var defered = $q.defer();
 			EntryResource.get({id: id}, function (entry) {
@@ -30,7 +30,7 @@ angular.module('app').service('EntryService', [
 			var newEntry = new EntryResource(entry);
 			return newEntry.$save();
 		}
-		
+
 		function deleteEntry(id) {
 			return getEntry(id).then(function (entry) {
 				return entry.$remove({id: id});

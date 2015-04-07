@@ -5,10 +5,9 @@ var express = require('express'),
     app = express(),
     mongoose   = require('mongoose'),
     session = require('express-session'),
-    passport = require('passport'),
-    authCheck = require('./modules/authenticationCheck');
+    passport = require('passport');
 
-mongoose.connect('mongodb://localhost:27017/test'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/DaysSince'); // connect to our database
 
 app.set('port', 3000);
 
@@ -22,21 +21,17 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 // Get Static Files
-app.use(express.static(__dirname + '/../client/build/'));
-
-var entryRoutes = require('./routes/entry');
-var twitterAuthRoutes = require('./routes/twitter');
-
+app.use(express.static(__dirname + '/../public/'));
 
 app.use('/api', function (req, res, next) {
     if(req.session.passport && req.session.passport.user && req.session.passport) {
-        console.log(req.session.passport.user.id);    
+        console.log(req.session.passport.user.id);
     }
     next();
 });
 app.use('/api', morgan('dev'));
-app.use('/api/entries', authCheck, entryRoutes);
-app.use('/api/auth/twitter', twitterAuthRoutes);
+app.use('/api/entries', require('./modules/authenticationCheck'), require('./routes/entry'));
+app.use('/api/auth/twitter', require('./routes/twitter'));
 
 app.use(require('./modules/notFound'));
 app.use(require('./modules/handleError'));

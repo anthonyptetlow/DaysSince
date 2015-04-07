@@ -1,0 +1,59 @@
+html,
+.container {
+  background-color: #D3D3D3;
+}
+.signPanel {
+  top: 50px;
+  padding: 40px;
+  background-color: grey;
+  border-radius: 1px;
+}
+.signPanel a,
+.signPanel a:hover {
+  color: #333333;
+  text-decoration: none;
+}
+.signPanel .fa {
+  margin-right: 10px;
+  font-size: 72px;
+  vertical-align: middle;
+}
+.entryPanel {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  background-color: grey;
+  border-radius: 1px;
+}
+.entryPanel.addEntry {
+  background-color: transparent;
+  border: 1px dashed grey;
+}
+.entryPanel .delete {
+  top: 6px;
+  float: right;
+  margin-left: 10px;
+  font-size: 24px;
+}
+.entryPanel .delete:hover {
+  cursor: pointer;
+}
+.entryPanel .btn {
+  float: right;
+}
+.entryPanel .btn:focus {
+  outline: none;
+}
+input {
+  outline: none;
+}
+.clearfix:after {
+  display: block;
+  height: 0;
+  clear: both;
+  content: " ";
+}
+.btn {
+  border-radius: 1px;
+}

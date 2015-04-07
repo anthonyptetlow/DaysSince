@@ -3,9 +3,9 @@ var gulp = require('gulp'),
 
 
 gulp.task('test', function () {
-	gulp.src([__dirname + "/../tests/*.js"])
+	gulp.src([__dirname + "/../client/tests/*.js"])
 	    .pipe(protractor({
-	        configFile: __dirname + "/../test/conf.js"
-	    })) 
+	        configFile: __dirname + "/../client/test/conf.js"
+	    }))
 	    .on('error', function(e) { throw e })
 });

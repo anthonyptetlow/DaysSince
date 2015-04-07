@@ -3,6 +3,6 @@ var gulp = require('gulp'),
 
 gulp.task('clean', function () {
 	return del.sync([
-		__dirname + '/../build/*'
+		__dirname + '/../public/*'
 		]);		
 });
