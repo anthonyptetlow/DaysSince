@@ -1,15 +1,15 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    debug = require('debug'),
+//     debug = require('debug'),
     morgan =  require('morgan'),
-    app = express(),
     mongoose   = require('mongoose'),
     session = require('express-session'),
-    passport = require('passport');
+    passport = require('passport'),
+    app = express();
 
 mongoose.connect('mongodb://localhost:27017/DaysSince'); // connect to our database
 
-app.set('port', 3000);
+app.set('port', (process.env.PORT || 5000));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,13 +29,14 @@ app.use('/api', function (req, res, next) {
     }
     next();
 });
+
 app.use('/api', morgan('dev'));
-app.use('/api/entries', require('./modules/authenticationCheck'), require('./routes/entry'));
+app.use('/api/entries', require('./middleware/authenticationCheck'), require('./routes/entry'));
 app.use('/api/auth/twitter', require('./routes/twitter'));
 
-app.use(require('./modules/notFound'));
-app.use(require('./modules/handleError'));
+app.use(require('./middleware/notFound'));
+app.use(require('./middleware/handleError'));
 
-var server = app.listen(app.get('port'), function() {
-    debug('Express server listening on port ' + server.address().port);
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
 });

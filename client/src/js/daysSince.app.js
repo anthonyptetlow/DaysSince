@@ -3,8 +3,14 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 
 	$stateProvider
 		.state('home', {
-			url: ' /',
-			templateUrl: './js/module/partials/signIn.html'
+			url: '/',
+			templateUrl: './js/module/partials/signIn.html',
+			resolve: {
+				test: function () {
+					console.log('Home page');
+					return 'testString';
+				}
+			}
 		})
 		.state('app', {
 			url: '/app',
@@ -12,6 +18,7 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 			templateUrl: './js/module/partials/home.html',
 			resolve: {
 				entryList: function (EntryService) {
+					console.log('getting entries');
 					return EntryService.getEntries();
 				}
 			}

@@ -3,8 +3,14 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 
 	$stateProvider
 		.state('home', {
-			url: ' /',
-			templateUrl: './js/module/partials/signIn.html'
+			url: '/',
+			templateUrl: './js/module/partials/signIn.html',
+			resolve: {
+				test: function () {
+					console.log('Home page');
+					return 'testString';
+				}
+			}
 		})
 		.state('app', {
 			url: '/app',
@@ -12,11 +18,63 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 			templateUrl: './js/module/partials/home.html',
 			resolve: {
 				entryList: function (EntryService) {
+					console.log('getting entries');
 					return EntryService.getEntries();
 				}
 			}
 		});
 });
+
+angular.module('app').controller('MainCtrl', [
+	'$scope',
+	'EntryService',
+	'entryList',
+	function ($scope, EntryService, entryList) {
+
+		$scope.entryList = entryList;
+
+		$scope.entry = {};
+
+		$scope.addEntry = function () {
+			if (angular.isDefined($scope.entry.title)) {
+				EntryService.createEntry($scope.entry)
+					.then(function (){
+						return EntryService.getEntries();
+					})
+					.then(function (entries) {
+						$scope.entryList = entries;
+						$scope.entry = {};
+					});
+			}
+		};
+
+		$scope.deleteEntry = function (id) {
+			EntryService.deleteEntry(id)
+			.then(function getEntries() {
+				return EntryService.getEntries();
+			})
+			.then(function updateEntries (entries) {
+				$scope.entryList = entries;
+			});
+		};
+
+		$scope.resetEntry = function (id) {
+			EntryService.addEvent(id)
+			.then(function () {
+				return EntryService.getEntries();
+			})
+			.then(function (entries) {
+				$scope.entryList = entries;
+			});
+		};
+
+		$scope.getDaysSince = function (entry){
+			var lastDate = entry.dates[entry.dates.length - 1],
+				noMillisSince = new Date() - new Date(lastDate);
+			return Math.floor(noMillisSince / (1000 * 60 * 60 * 24));
+		};
+	}
+]);
 
 // angular.module('app').directive('MainDir', [function () {
 // 	return {
@@ -111,54 +169,3 @@ angular.module('app').factory('RequestInteceptor', [
 angular.module('app').config(['$httpProvider', function ($httpProvider) {
 	$httpProvider.interceptors.push('RequestInteceptor');
 }]);
-
-angular.module('app').controller('MainCtrl', [
-	'$scope',
-	'EntryService',
-	'entryList',
-	function ($scope, EntryService, entryList) {
-
-		$scope.entryList = entryList;
-
-		$scope.entry = {};
-
-		$scope.addEntry = function () {
-			if (angular.isDefined($scope.entry.title)) {
-				EntryService.createEntry($scope.entry)
-					.then(function (){
-						return EntryService.getEntries();
-					})
-					.then(function (entries) {
-						$scope.entryList = entries;
-						$scope.entry = {};
-					});
-			}
-		};
-
-		$scope.deleteEntry = function (id) {
-			EntryService.deleteEntry(id)
-			.then(function getEntries() {
-				return EntryService.getEntries();
-			})
-			.then(function updateEntries (entries) {
-				$scope.entryList = entries;
-			});
-		};
-
-		$scope.resetEntry = function (id) {
-			EntryService.addEvent(id)
-			.then(function () {
-				return EntryService.getEntries();
-			})
-			.then(function (entries) {
-				$scope.entryList = entries;
-			});
-		};
-
-		$scope.getDaysSince = function (entry){
-			var lastDate = entry.dates[entry.dates.length - 1],
-				noMillisSince = new Date() - new Date(lastDate);
-			return Math.floor(noMillisSince / (1000 * 60 * 60 * 24));
-		};
-	}
-]);
