@@ -17,7 +17,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: TWITTER_CONSUMER_KEY,
     consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://localhost:3000/api/auth/twitter/callback"
+    callbackURL: "http://localhost:5000/api/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
@@ -25,7 +25,7 @@ passport.use(new TwitterStrategy({
     console.log(tokenSecret);
     // console.log(profile);
     process.nextTick(function () {
-      
+
       // To keep the example simple, the user's Twitter profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Twitter account with a user record in your database,
@@ -53,7 +53,7 @@ router.get('/',
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-router.get('/callback', 
+router.get('/callback',
   passport.authenticate('twitter', { successRedirect: '/#/app', failureRedirect: '/login' }));
 
 

@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "gulp start"
+    "start": "node server",
+    "postinstall": "node node_modules/.bin/bower install; node node_modules/.bin/gulp buildOnce"
   },
   "dependencies": {
     "body-parser": "~1.9.2",

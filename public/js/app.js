@@ -7,7 +7,6 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 			templateUrl: './js/module/partials/signIn.html',
 			resolve: {
 				test: function () {
-					console.log('Home page');
 					return 'testString';
 				}
 			}
@@ -18,7 +17,6 @@ angular.module('app', ['ngResource', 'ui.router']).config(function($stateProvide
 			templateUrl: './js/module/partials/home.html',
 			resolve: {
 				entryList: function (EntryService) {
-					console.log('getting entries');
 					return EntryService.getEntries();
 				}
 			}
