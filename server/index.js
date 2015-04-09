@@ -7,7 +7,9 @@ var express = require('express'),
     passport = require('passport'),
     app = express();
 
-mongoose.connect('mongodb://localhost:27017/DaysSince'); // connect to our database
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/DaysSince'
+
+mongoose.connect(mongoUri); // connect to our database
 
 app.set('port', (process.env.PORT || 5000));
 

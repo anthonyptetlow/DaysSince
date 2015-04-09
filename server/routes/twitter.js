@@ -6,6 +6,8 @@ var express = require('express'),
 var TWITTER_CONSUMER_KEY = "hNCXNBeCfWrv4SjpFFbAT4ZFg";
 var TWITTER_CONSUMER_SECRET = "hBlrslQVAHZWLoEFkI1XWeWTcFndtIcQUBzdbaAPnjpYFhYpJ9";
 
+var hostUrl = process.env.NODE_HOST || 'http://localhost:5000';
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -17,7 +19,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new TwitterStrategy({
     consumerKey: TWITTER_CONSUMER_KEY,
     consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://localhost:5000/api/auth/twitter/callback"
+    callbackURL: hostUrl + "/api/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
